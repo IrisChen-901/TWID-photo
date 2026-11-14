@@ -1,7 +1,13 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>台灣證件照裁切</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>:root{color-scheme:light}body{margin:0;font:14px system-ui}[hidden]{display:none!important}img{max-width:100%}</style>
+</head>
+<body>
 <style>
 /* ===== 【修改區 1】顏色設定（輔助線與標籤）=====
    想換輔助線顏色，只要改下面這 6 行的顏色碼：#加 6 碼（例如 #12894a），或 rgba(紅,綠,藍,透明度)。
@@ -156,14 +162,16 @@ h1{margin:0;font-size:clamp(22px,3.2vw,28px);line-height:1.25;font-weight:700;le
 .guides{position:absolute;inset:0;pointer-events:none;overflow:hidden}
 .band{position:absolute;left:0;right:0;background:var(--guide-soft)}
 .vc{position:absolute;top:0;bottom:0;left:50%;border-left:1px dashed var(--guide);opacity:.5}
-.g{position:absolute;left:0;right:0;height:0;filter:drop-shadow(0 0 1px rgba(255,255,255,.9))}
+.g{position:absolute;left:0;right:0;height:0}
 .g.solid{border-top:2px solid var(--guide);margin-top:-1px}
-.g.dash{border-top:1.5px dashed var(--guide);margin-top:-1px}
-.g.dot{border-top:1.5px dotted var(--guide);margin-top:-1px}
-.gv{position:absolute;top:0;bottom:0;width:0;filter:drop-shadow(0 0 1px rgba(255,255,255,.9))}
+.g.dash,.g.dot{height:2px;margin-top:-1px}
+.g.dash{background:repeating-linear-gradient(to right,var(--guide) 0 8px,transparent 8px 14px)}
+.g.dot{background:repeating-linear-gradient(to right,var(--guide) 0 3px,transparent 3px 7px)}
+.gv{position:absolute;top:0;bottom:0;width:0}
 .gv.solid{border-left:2px solid var(--guide);margin-left:-1px}
-.gv.dash{border-left:1.5px dashed var(--guide);margin-left:-1px}
-.gv.dot{border-left:1.5px dotted var(--guide);margin-left:-1px}
+.gv.dash,.gv.dot{width:2px;margin-left:-1px}
+.gv.dash{background:repeating-linear-gradient(to bottom,var(--guide) 0 8px,transparent 8px 14px)}
+.gv.dot{background:repeating-linear-gradient(to bottom,var(--guide) 0 3px,transparent 3px 7px)}
 .tag{
   position:absolute;right:6px;top:50%;transform:translateY(-50%);
   background:var(--guide);color:var(--on-guide);
@@ -358,6 +366,7 @@ details.card > summary:focus-visible{outline:3px solid var(--accent);outline-off
 .map .md{color:var(--ink-2);flex:1 1 180px}
 #srcbox{width:100%;height:170px;font:400 12px/1.5 var(--mono);color:var(--ink);background:var(--surface-2);border:1px solid var(--line-2);border-radius:6px;padding:8px}
 
+.credit{display:block !important;visibility:visible !important;opacity:1 !important;position:static !important;margin:28px 0 0;padding-top:14px;border-top:1px solid var(--line);text-align:center;font:400 12.5px/1.6 var(--mono);letter-spacing:.06em;color:var(--ink-2) !important;clip:auto !important;height:auto !important;width:auto !important;transform:none !important}
 @media (max-width:880px){
   .app{grid-template-columns:minmax(0,1fr)}
   .panel{display:contents}
@@ -394,14 +403,13 @@ details.card > summary:focus-visible{outline:3px solid var(--accent);outline-off
     <p class="spec" id="spec"><span id="spec1">成品 3.5 × 4.5 cm</span><span id="spec2">頭頂至下巴 3.2–3.6 cm</span></p>
   </header>
 
-  <p class="boot" id="boot" role="status">網頁載入中…　如果一直停在這則訊息，表示目前的瀏覽器環境沒有執行網頁程式，選了照片也不會有反應。請改用 Claude 的 App 或網頁開啟，或把網頁放到自己的網址（做法在載入成功後的「修改說明」分頁）。</p>
+  <p class="boot" id="boot" role="status">網頁載入中…　如果一直停在這則訊息，表示目前的瀏覽器沒有執行網頁程式，選了照片也不會有反應。請確認已開啟 JavaScript，並改用 Safari 或 Chrome 直接開啟（不要在 LINE、Facebook 等 App 內建的瀏覽器裡開）。</p>
   <noscript><p class="errbar">這個瀏覽器關閉了 JavaScript，網頁無法運作。請開啟 JavaScript，或改用其他瀏覽器。</p></noscript>
   <p class="errbar" id="errbar" role="alert" hidden></p>
 
   <nav class="tabs" role="tablist" aria-label="頁面">
     <button class="tab" role="tab" id="tab-preset" data-tab="preset" aria-selected="true" aria-controls="app">證件照規格</button>
     <button class="tab" role="tab" id="tab-custom" data-tab="custom" aria-selected="false" aria-controls="app" tabindex="-1">自訂裁切</button>
-    <button class="tab" role="tab" id="tab-howto" data-tab="howto" aria-selected="false" aria-controls="howtoPage" tabindex="-1">修改說明</button>
   </nav>
 
   <main class="app" id="app">
@@ -552,211 +560,8 @@ details.card > summary:focus-visible{outline:3px solid var(--accent);outline-off
     </aside>
   </main>
 
-  <section class="howto" id="howtoPage" hidden aria-label="修改說明">
-    <h2>怎麼修改這個網站？</h2>
-    <p class="lead">不用會寫程式。最簡單的做法是用中文告訴 Claude 要改什麼；想自己動手，只要認得「修改區」，改幾個數字和顏色就好。這一頁也會教你怎麼看懂整個 HTML 檔，以及怎麼把網頁放到自己的網址。</p>
+  <footer class="credit" id="credit">製作者：Iris</footer>
 
-    <details class="card" open>
-      <summary>方法 A：直接告訴 Claude（最簡單）</summary>
-      <div class="body">
-        <p>回到和 Claude 的對話，說出想改的地方。Claude 改好後會更新同一個網址。可以直接複製下面的句子，再換成你要的內容：</p>
-        <ul class="prompts">
-          <li><span>把輔助線改成綠色</span><button class="btn sm" type="button" data-copy="prev">複製</button></li>
-          <li><span>把 2 吋大頭照的頭頂至下巴範圍改成 3.0–3.4 cm</span><button class="btn sm" type="button" data-copy="prev">複製</button></li>
-          <li><span>新增一個規格：2.8 × 3.5 cm，用途寫「居留證」，一張 4×6 排 12 張</span><button class="btn sm" type="button" data-copy="prev">複製</button></li>
-          <li><span>自訂裁切頁一開始的尺寸改成 4 × 6 cm</span><button class="btn sm" type="button" data-copy="prev">複製</button></li>
-          <li><span>把輔助線畫粗一點</span><button class="btn sm" type="button" data-copy="prev">複製</button></li>
-        </ul>
-        <p>說得越具體越好：寫出規格名稱和要改成的數字（cm）。如果規格有新的公告，直接把公告文字貼給 Claude 也可以。</p>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>方法 B：自己改（下載網頁檔，用文字編輯器）</summary>
-      <div class="body">
-        <ol>
-          <li>按下面的按鈕下載網頁檔，檔名是 <code>index.html</code>。
-            <div class="btns" style="margin:8px 0 0"><button class="btn" type="button" id="dlsrc">下載網頁檔</button></div>
-            <p class="msg" id="srcmsg" role="status" aria-live="polite"></p>
-          </li>
-          <li>用文字編輯器開啟。Windows 用「記事本」就可以；Mac 的「文字編輯」要先選功能表的「格式 → 製作純文字」再開檔，不然存檔會壞掉。更推薦免費的 Visual Studio Code，它會把程式碼上色，比較好讀。</li>
-          <li>按 <code>Ctrl + F</code>（Mac 是 <code>⌘ + F</code>）開啟搜尋，貼上 <code class="zone" data-zone="1"></code> 之類的標記，就會直接跳到可以改的地方。</li>
-          <li>只改數字、顏色碼和引號裡的文字。不要刪掉逗號、引號、分號和括號。</li>
-          <li>存檔後，在檔案上按兩下，用瀏覽器開啟，確認有沒有改成功。</li>
-          <li>想放回 Claude 的網址：把改好的檔案內容貼給 Claude（或上傳檔案），說「請把這個檔案更新發布到原本的網址」。</li>
-        </ol>
-        <div class="note2">自己電腦上開啟的版本不是 Claude 的網址，下載按鈕會改成「顯示圖片，請長按或按右鍵另存」，常用尺寸只存在那個瀏覽器裡，這些都是正常的。</div>
-        <div id="srcfallback" hidden>
-          <p>這個環境無法直接下載檔案。請按「全選」複製下面的內容，貼到新的文字檔，存成 <code>index.html</code>。</p>
-          <textarea id="srcbox" readonly aria-label="網頁原始碼"></textarea>
-          <div class="btns" style="margin-top:8px"><button class="btn sm" type="button" id="srcselect">全選並複製</button></div>
-        </div>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>方法 C：不透過 Claude，用 Safari 或 Chrome 貼網址就能開</summary>
-      <div class="body">
-        <p>Claude 做出來的網址只能在 Claude 裡面執行。要在手機的 Safari 或 Chrome 直接貼網址使用，必須把網頁放到一般的網站空間。我（Claude）沒有辦法替你把網頁放上網路，下面是免費又簡單的做法，網頁檔就是方法 B 下載的 <code>index.html</code>：</p>
-        <h3>做法一：GitHub Pages（免費、網址長期有效，推薦）</h3>
-        <ol>
-          <li>用電腦註冊並登入 <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>。</li>
-          <li>點右上角「＋」→「New repository」，名稱隨意（例如 <code>id-photo</code>），選 <b>Public</b>，按「Create repository」。</li>
-          <li>在新倉庫頁面按「Add file → Upload files」，把 <code>index.html</code> 拖進去，按「Commit changes」。檔案要放在最上層，不要放進資料夾。</li>
-          <li>進入「Settings → Pages」，在「Build and deployment」的 Source 選「Deploy from a branch」，Branch 選 <code>main</code> 和「/ (root)」，按 Save。</li>
-          <li>等 1～10 分鐘，同一頁會出現網址，格式是 <code>https://你的帳號.github.io/倉庫名稱/</code>。把它傳到手機，用 Safari 或 Chrome 貼上就能開。</li>
-        </ol>
-        <h3>做法二：Netlify Drop（最快，但要記得認領）</h3>
-        <ol>
-          <li>把 <code>index.html</code> 放進一個新資料夾。</li>
-          <li>用電腦開啟 <a href="https://netlify.com/drop" target="_blank" rel="noopener noreferrer">netlify.com/drop</a>，把整個資料夾拖進頁面，馬上會得到網址。</li>
-          <li>沒有認領的網站會自己過期並被刪除，所以請依畫面指示註冊並認領，才能長期使用。</li>
-        </ol>
-        <h3>放好之後</h3>
-        <ul>
-          <li>在 iPhone 的 Safari：點「分享」→「加入主畫面」。Android 的 Chrome：點右上角選單 →「加到主畫面」。之後像 App 一樣一點就開。</li>
-          <li>照片仍然只在手機上處理，不會上傳到網站。</li>
-          <li>獨立版的常用尺寸只存在那支手機的那個瀏覽器，不會和 Claude 版同步。</li>
-          <li>之後要改程式：改好 <code>index.html</code>，回 GitHub 倉庫用「Add file → Upload files」上傳同名檔案覆蓋。</li>
-          <li>各網站的選單名稱可能會調整，如果對不上，請照畫面上相近的選項操作。</li>
-        </ul>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>怎麼看懂整個 HTML 檔</summary>
-      <div class="body">
-        <h3>1. 一個 HTML 檔裡有三種東西</h3>
-        <div class="anatomy" aria-label="HTML 檔的結構">
-          <div class="a-box"><b>&lt;head&gt;</b>　網頁的設定，不會直接顯示
-            <ul>
-              <li><b>&lt;title&gt;</b>　分頁上的標題</li>
-              <li><b>&lt;style&gt;</b>　<strong>外觀（CSS）</strong>：顏色、大小、位置</li>
-            </ul>
-          </div>
-          <div class="a-box"><b>&lt;body&gt;</b>　畫面上看得到的東西（<strong>HTML</strong>）：標題、按鈕、輸入框
-            <div class="a-box a-inner"><b>&lt;script&gt;</b>　<strong>功能（JavaScript）</strong>：按下按鈕後要做什麼、怎麼裁切、怎麼存檔</div>
-          </div>
-        </div>
-        <p>這個檔案的順序是：先 <code>&lt;style&gt;</code>（外觀），再畫面（HTML），最後 <code>&lt;script&gt;</code>（功能）。</p>
-
-        <h3>2. 怎麼讀一行程式</h3>
-        <div class="tbwrap"><table class="tb">
-          <tr><th>種類</th><th>範例（都是這個檔案裡真的有的）</th><th>怎麼讀</th></tr>
-          <tr><td>HTML</td><td><code>&lt;button class="btn" type="button" id="rot"&gt;旋轉 90°&lt;/button&gt;</code></td><td><code>button</code> 是按鈕；<code>class</code> 是外觀用的名牌；<code>id</code> 是功能用的名牌；中間的字就是畫面上看到的字。標籤一定成對：<code>&lt;button&gt;</code> 開始，<code>&lt;/button&gt;</code> 結束。</td></tr>
-          <tr><td>CSS</td><td><code>.btn{ border-radius:6px; min-height:40px; }</code></td><td><code>.btn</code> 表示「所有 class 是 btn 的東西」，大括號裡每一行是「屬性:值;」。圓角 6px、最小高度 40px。</td></tr>
-          <tr><td>JavaScript</td><td><code>$('rot').addEventListener('click', function(){ ... });</code></td><td>找出 id 是 <code>rot</code> 的東西，被點擊（click）時，執行大括號裡的動作。</td></tr>
-          <tr><td>設定資料</td><td><code>{ key: 'id2', w: 3.5, h: 4.5 }</code></td><td>大括號是「一組資料」，每項是「名稱: 值」，用逗號隔開。中括號 <code>[ ]</code> 是「一排項目」。</td></tr>
-        </table></div>
-        <p>註解是寫給人看的說明，程式不會執行：CSS 和 JavaScript 用 <code>/* 說明 */</code>，HTML 用 <code>&lt;!-- 說明 --&gt;</code>。</p>
-
-        <h3>3. 三步追蹤法：想改某個東西，要去哪裡找？</h3>
-        <ol>
-          <li><b>改畫面上的字</b>：搜尋那段字（例如「旋轉 90°」），找到的是 HTML。</li>
-          <li><b>改它的顏色、大小</b>：看那一行的 <code>class="btn"</code>，搜尋 <code>.btn</code>，到 CSS 裡改。</li>
-          <li><b>改它按下去的行為</b>：看 <code>id="rot"</code>，搜尋 <code>'rot'</code>，到 JavaScript 裡改。</li>
-        </ol>
-        <p>也就是說，<code>class</code> 把 HTML 和 CSS 連起來，<code>id</code> 把 HTML 和 JavaScript 連起來。</p>
-
-        <h3>4. 讀大檔案的小技巧</h3>
-        <ul>
-          <li>搜尋：<code>Ctrl + F</code>（Mac <code>⌘ + F</code>）。</li>
-          <li>跳到指定行：VS Code 按 <code>Ctrl + G</code>（Mac <code>⌃ + G</code>）。</li>
-          <li>摺疊：VS Code 每段程式左邊有小箭頭可以收合；<code>Ctrl + K</code> 再按 <code>Ctrl + 0</code> 全部收合，<code>Ctrl + K</code> 再按 <code>Ctrl + J</code> 全部展開。先全部收合，只展開要看的段落，就不會被淹沒。</li>
-          <li>電腦版瀏覽器可以按 <code>F12</code>（或在畫面上按右鍵選「檢查」），再用左上角的「選取元素」點畫面上的東西，右邊就會顯示它對應的 HTML 和 CSS。</li>
-        </ul>
-
-        <h3>5. 用「檔案地圖」逛一遍這個檔案</h3>
-        <p>按下面的按鈕載入這個網頁自己的原始碼，會列出每一大塊從第幾行開始，點「跳到」就能看到內容。你也可以搜尋文字，或直接捲動閱讀。</p>
-        <div class="btns"><button class="btn" type="button" id="srcopen">載入檔案地圖與原始碼</button></div>
-        <p class="msg" id="mapmsg" role="status" aria-live="polite"></p>
-        <div id="mapwrap" hidden>
-          <ul class="map" id="map"></ul>
-          <div class="srcbar">
-            <input type="text" id="srcq" placeholder="搜尋文字，例如 旋轉 90°" aria-label="在原始碼中搜尋">
-            <button class="btn sm" type="button" id="srcfind">找下一個</button>
-          </div>
-          <p class="msg" id="findmsg" role="status" aria-live="polite"></p>
-          <div class="srcview" id="srcview" tabindex="0" aria-label="原始碼">
-            <div class="srcin" id="srcin"><div class="hl" id="hl" hidden></div><div class="gut" id="gut"></div><div class="cod" id="cod"></div></div>
-          </div>
-        </div>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>常見修改 1：輔助線換顏色</summary>
-      <div class="body">
-        <p>找到 <code class="zone" data-zone="1"></code>（檔案最上面，在 <code>&lt;style&gt;</code> 裡），改那 6 行的顏色碼。淺色是一般模式，深色是開了深色模式時用的，兩組都要改。</p>
-        <p>不想自己算？用這個小工具：選一個顏色，它會直接產生整段要貼上的內容，並且馬上在這頁預覽（重新整理就還原）。</p>
-        <div class="colorbox">
-          <input type="color" id="cpick" value="#d4202c" aria-label="選擇輔助線顏色">
-          <span class="demo" aria-hidden="true"></span>
-          <button class="btn sm" type="button" id="creset">還原預覽</button>
-        </div>
-        <div class="codehd"><span>把這 6 行取代原本的 6 行：</span><button class="btn sm" type="button" data-copy="#ccode">複製</button></div>
-        <pre><code id="ccode"></code></pre>
-        <p>顏色碼是 <code>#</code> 加 6 個字元，常見顏色：綠 <code>#12894a</code>、藍 <code>#1d6fe0</code>、橘 <code>#d9480f</code>、紫 <code>#7b3fc4</code>。<code>rgba(18,137,74,.14)</code> 是同一個顏色的半透明版本，用在輔助線之間的淡色範圍帶，最後一個數字越大越濃。</p>
-        <div class="note2">標籤上的字（例如「頭頂 0」）顏色由 <code>on-guide</code> 這兩行決定。如果換成很亮的顏色（黃、淺綠），請把它改成深色，例如 <code>#1a1a1a</code>，不然字會看不清楚。小工具會自動判斷。</div>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>常見修改 2：調整或新增證件照規格</summary>
-      <div class="body">
-        <p>找到 <code class="zone" data-zone="2"></code>。每個規格是一個大括號區塊，名稱（例如 <code>id2</code>）是這個規格的代號。想改數字，直接改冒號後面的值；想新增，複製一整個區塊，改代號和內容，再貼在最後一個區塊後面（記得區塊之間有逗號）。規格清單會自動長出新的選項，不用再改別的地方。</p>
-        <div class="tbwrap"><table class="tb">
-          <tr><th>欄位</th><th>意思</th></tr>
-          <tr><td><code>name</code></td><td>規格清單上顯示的名稱</td></tr>
-          <tr><td><code>short</code></td><td>下載檔名用的短名稱</td></tr>
-          <tr><td><code>w</code>、<code>h</code></td><td>成品的寬、高（cm）</td></tr>
-          <tr><td><code>top</code></td><td>頭頂線離照片上緣的距離（cm）</td></tr>
-          <tr><td><code>hmin</code>、<code>hmid</code>、<code>hmax</code></td><td>頭頂到下巴的最小、建議、最大長度（cm）。下巴的實線畫在 <code>top + hmid</code>，兩條虛線畫在 <code>top + hmin</code> 和 <code>top + hmax</code></td></tr>
-          <tr><td><code>cols</code>、<code>rows</code>、<code>gap</code></td><td>4×6 紙上橫向幾張、縱向幾張、照片之間的間距（cm）</td></tr>
-          <tr><td><code>orient</code></td><td>紙張方向：<code>'land'</code> 橫式（15.24 × 10.16 cm）或 <code>'port'</code> 直式（10.16 × 15.24 cm）</td></tr>
-          <tr><td><code>uses</code></td><td>「適用」的文字，會顯示在規格清單和預覽下方</td></tr>
-          <tr><td><code>spec2</code></td><td>網頁標題旁的規格摘要</td></tr>
-          <tr><td><code>rules</code></td><td>預覽下方的提示清單，一條一行，用逗號隔開，文字放在引號裡</td></tr>
-          <tr><td><code>srcs</code></td><td>規格來源連結，<code>t</code> 是名稱、<code>u</code> 是網址</td></tr>
-          <tr><td><code>eye</code>、<code>digital</code></td><td>美簽專用（眼睛輔助線、DS-160 按鈕），一般規格不用寫</td></tr>
-        </table></div>
-        <div class="note2">排版要放得下：橫向 <code>cols × w + (cols − 1) × gap</code> 不能超過紙寬，縱向 <code>rows × h + (rows − 1) × gap</code> 不能超過紙高。橫式紙寬 15.24、紙高 10.16，直式相反（單位 cm）。超過的部分會被紙邊切掉。</div>
-        <div class="codehd"><span>新增規格的範本（貼在最後一個區塊後面）：</span><button class="btn sm" type="button" data-copy="#spectpl">複製</button></div>
-<pre><code id="spectpl">  myspec: {
-    key: 'myspec', name: '我的規格', short: '我的規格', w: 3.5, h: 4.5,
-    top: 0.4, hmin: 3.2, hmid: 3.4, hmax: 3.6,
-    cols: 4, rows: 2, gap: 0.2, orient: 'land',
-    uses: '這裡寫用途',
-    spec2: '頭頂至下巴 3.2–3.6 cm',
-    rules: [
-      '第一條提示',
-      '第二條提示'
-    ],
-    srcs: [{ t: '來源名稱', u: 'https://example.com' }]
-  },</code></pre>
-        <p>如果規格後來有變動（例如頭部範圍改了），只要改那個區塊的 <code>hmin</code>、<code>hmid</code>、<code>hmax</code>，以及 <code>rules</code> 裡的文字。</p>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>常見修改 3：自訂裁切的預設值、常用尺寸上限</summary>
-      <div class="body">
-        <p>找到 <code class="zone" data-zone="3"></code>。<code>CUSTOM_DEFAULT</code> 是「自訂裁切」分頁一開始的尺寸和輔助線；<code>lines</code> 裡每一行是一條輔助線：<code>axis</code> 是 <code>'h'</code>（水平）或 <code>'v'</code>（垂直），<code>at</code> 是位置（cm），<code>sty</code> 是線型（<code>'solid'</code> 實線、<code>'dash'</code> 虛線、<code>'dot'</code> 點線），<code>label</code> 是標籤文字。<code>MAX_SAVED</code> 是常用尺寸最多可以存幾個。</p>
-      </div>
-    </details>
-
-    <details class="card">
-      <summary>改壞了或沒反應怎麼辦</summary>
-      <div class="body">
-        <ul>
-          <li>畫面空白、按鈕沒反應：多半是少了逗號、引號或括號。用原本下載的檔案重來，每次改之前先另存一份備份。</li>
-          <li>改了沒有變化：確認改的是「修改區」，存檔後在瀏覽器按重新整理（<code>Ctrl + R</code> 或 <code>⌘ + R</code>）。</li>
-          <li>只在深色模式下顏色不對：深色那一組的顏色也要改。</li>
-          <li>規格最後仍以受理機關的最新公告為準，改完請再核對一次。</li>
-        </ul>
-      </div>
-    </details>
-  </section>
 </div>
 
 <script>
@@ -770,7 +575,11 @@ function showErr(msg){
   b.textContent = '程式發生錯誤：' + msg + '（把這行文字告訴 Claude，就能找出原因）';
   b.hidden = false;
 }
-window.addEventListener('error', function(e){ showErr(e && e.message ? e.message : '未知錯誤'); });
+window.addEventListener('error', function(e){
+  /* 「Script error.」且沒有行號，代表錯誤來自別人的程式（瀏覽器外掛、LINE/FB 等 App 內建瀏覽器注入的腳本），不是這個網頁，所以不顯示 */
+  if (!e || (e.message === 'Script error.' && !e.lineno)) return;
+  showErr(e.message ? e.message : '未知錯誤');
+});
 window.addEventListener('unhandledrejection', function(e){
   var r = e && e.reason;
   showErr(r && r.message ? r.message : String(r || '未知錯誤'));
@@ -1902,222 +1711,8 @@ $('dlsheet').addEventListener('click', function(){ runDownload('sheet'); });
 $('dlone').addEventListener('click', function(){ runDownload('single'); });
 $('dlds').addEventListener('click', function(){ runDownload('ds'); });
 
-/* ---- how-to page: copy buttons, color tool, source download and viewer ---- */
-Array.prototype.forEach.call(document.querySelectorAll('.zone'), function(e){
-  e.textContent = '【修改區 ' + e.getAttribute('data-zone') + '】';
-});
-function copyText(t, btn){
-  var label = btn.textContent;
-  function done(ok){
-    btn.textContent = ok ? '已複製' : '請手動選取';
-    setTimeout(function(){ btn.textContent = label; }, 1400);
-  }
-  function fallback(){
-    try {
-      var ta = document.createElement('textarea');
-      ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select();
-      var ok = document.execCommand('copy');
-      document.body.removeChild(ta);
-      done(ok);
-    } catch (_) { done(false); }
-  }
-  try {
-    if (navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(t).then(function(){ done(true); }, fallback);
-    } else { fallback(); }
-  } catch (_) { fallback(); }
-}
-$('howtoPage').addEventListener('click', function(e){
-  var b = e.target.closest ? e.target.closest('[data-copy]') : null;
-  if (!b) return;
-  var spec = b.getAttribute('data-copy');
-  var from = spec === 'prev' ? b.previousElementSibling : document.querySelector(spec);
-  if (from) copyText(from.textContent, b);
-});
-
-function hex2rgb(h){ var n = parseInt(h.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
-function rgb2hex(a){ return '#' + a.map(function(v){ return ('0' + Math.round(v).toString(16)).slice(-2); }).join(''); }
-function mixWhite(rgb, t){ return rgb.map(function(v){ return v + (255 - v) * t; }); }
-function lum(rgb){ return (0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2]) / 255; }
-var GUIDE_VARS = ['--guide-light', '--guide-dark', '--guide-soft-light', '--guide-soft-dark', '--on-guide-light', '--on-guide-dark'];
-function updateColor(hex){
-  var rl = hex2rgb(hex), rd = mixWhite(rl, 0.35);
-  var vals = [
-    hex,
-    rgb2hex(rd),
-    'rgba(' + rl.join(',') + ',.14)',
-    'rgba(' + rd.map(Math.round).join(',') + ',.16)',
-    lum(rl) > 0.55 ? '#1a1a1a' : '#ffffff',
-    lum(rd) > 0.55 ? '#1a1a1a' : '#ffffff'
-  ];
-  $('ccode').textContent = GUIDE_VARS.map(function(n, i){ return '  ' + n + ':' + vals[i] + ';'; }).join('\n');
-  GUIDE_VARS.forEach(function(n, i){ document.documentElement.style.setProperty(n, vals[i]); });
-}
-$('cpick').addEventListener('input', function(e){ updateColor(e.target.value); });
-$('creset').addEventListener('click', function(){
-  GUIDE_VARS.forEach(function(n){ document.documentElement.style.removeProperty(n); });
-  $('cpick').value = '#d4202c';
-  $('ccode').textContent = '（選一個顏色，這裡會產生要貼上的內容）';
-});
-$('ccode').textContent = '（選一個顏色，這裡會產生要貼上的內容）';
-
-var srcText = null;
-function wrapDoc(t){
-  if (/^\s*<!doctype/i.test(t)) return t;
-  return '<!doctype html>\n<html lang="zh-Hant">\n<head>\n<meta charset="utf-8">\n' +
-    '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n' +
-    '<style>:root{color-scheme:light}body{margin:0;font:14px system-ui}[hidden]{display:none!important}img{max-width:100%}</style>\n' +
-    '</head>\n<body>\n' + t + '\n</body>\n</html>\n';
-}
-function okSource(t){ return typeof t === 'string' && t.indexOf('CUSTOM_DEFAULT') >= 0 && t.indexOf('PRESETS') >= 0; }
-function loadSource(){
-  if (srcText) return Promise.resolve(srcText);
-  return fetch('source.txt', { cache: 'no-store' }).then(function(r){
-    if (!r.ok) throw new Error('http');
-    return r.text();
-  }).then(function(t){
-    if (!okSource(t)) throw new Error('bad');
-    srcText = wrapDoc(t);
-    return srcText;
-  }).catch(function(){
-    if (!/^https?:$/.test(location.protocol)) throw new Error('nofetch');
-    return fetch(location.href, { cache: 'no-store' }).then(function(r){ return r.text(); }).then(function(t){
-      if (!okSource(t)) throw new Error('bad');
-      srcText = t;
-      return t;
-    });
-  });
-}
-$('dlsrc').addEventListener('click', function(){
-  var msg = $('srcmsg');
-  msg.className = 'msg';
-  msg.textContent = '正在準備…';
-  loadSource().then(function(t){
-    if (downloads){
-      return downloads.save({ filename: 'index.html', data: t }).then(function(){
-        msg.className = 'msg ok';
-        msg.textContent = '已儲存 index.html。';
-        $('srcfallback').hidden = true;
-      }, function(err){
-        if (err && err.code === 'declined'){ msg.textContent = '已取消下載。'; return; }
-        throw err;
-      });
-    }
-    throw new Error('nodl');
-  }).catch(function(err){
-    if (err && err.message === 'nofetch'){
-      msg.className = 'msg err';
-      msg.textContent = '這份檔案本身就是網頁原始碼，請直接用編輯器開啟它。';
-      return;
-    }
-    if (srcText){
-      $('srcbox').value = srcText;
-      $('srcfallback').hidden = false;
-      msg.className = 'msg';
-      msg.textContent = '這個環境無法直接下載，請改用下方的複製方式。';
-    } else {
-      msg.className = 'msg err';
-      msg.textContent = '讀不到原始碼。請回到 Claude 對話，請它把完整的網頁檔提供給你。';
-    }
-  });
-});
-$('srcselect').addEventListener('click', function(){
-  var ta = $('srcbox');
-  ta.focus(); ta.select();
-  copyText(ta.value, $('srcselect'));
-});
-
-var LANDMARKS = [
-  ['檔案開頭：標題與字型', '<title> 是分頁名稱，<link> 載入字型', /^<title>/],
-  ['外觀（CSS）開始', '<style>：所有顏色、大小、位置都在這一大段', /^<style>/],
-  ['修改區 1：顏色設定', '輔助線與標籤顏色，換顏色改這裡', /【修改區 1】/],
-  ['外觀（CSS）結束', '</style>', /^<\/style>/],
-  ['畫面（HTML）開始', '從這裡開始是畫面上看得到的東西', /^<div class="wrap">/],
-  ['分頁按鈕', '證件照規格、自訂裁切、修改說明', /class="tabs"/],
-  ['步驟 1：選擇照片', '上傳照片的按鈕', /class="step s1"/],
-  ['步驟 2：選擇規格／自訂設定', '規格清單與自訂尺寸輸入框', /class="step s2"/],
-  ['步驟 3：對齊輔助線', '縮放、傾斜、旋轉的控制項', /class="step s3"/],
-  ['步驟 4：排版與下載', '4×6 預覽與下載按鈕', /class="step s4"/],
-  ['修改說明頁', '你正在看的這一頁', /id="howtoPage"/],
-  ['功能（JavaScript）開始', '<script>：按鈕按下去之後做什麼', /^<script>/],
-  ['修改區 2：證件照規格', '每個規格的尺寸、輔助線、提示文字', /【修改區 2】/],
-  ['修改區 3：自訂裁切預設值', '自訂分頁的起始尺寸與常用尺寸上限', /【修改區 3】/],
-  ['裁切畫面的繪製', 'function paint：把照片畫進裁切框', /^function paint\(/],
-  ['4×6 排版繪製', 'function drawSheet：把照片排進 4×6 紙', /^function drawSheet\(/],
-  ['常用尺寸的儲存', 'function persist：存到帳號或瀏覽器', /^function persist\(/],
-  ['下載輸出', 'function runDownload：產生檔案並下載', /^function runDownload\(/]
-];
-function buildMap(text){
-  var lines = text.split('\n');
-  var nums = [];
-  for (var i = 1; i <= lines.length; i++) nums.push(i);
-  $('gut').textContent = nums.join('\n');
-  $('cod').textContent = text;
-  var ul = $('map');
-  ul.innerHTML = '';
-  LANDMARKS.forEach(function(m){
-    var at = -1;
-    for (var j = 0; j < lines.length; j++){
-      if (m[2].test(lines[j].replace(/^\s+/, ''))){ at = j + 1; break; }
-    }
-    if (at < 0) return;
-    var li = mk('li');
-    var b = mk('button', '', '第 ' + at + ' 行');
-    b.type = 'button';
-    b.addEventListener('click', function(){ jumpTo(at); });
-    li.appendChild(b);
-    li.appendChild(mk('span', 'ml', m[0]));
-    li.appendChild(mk('span', 'md', m[1]));
-    ul.appendChild(li);
-  });
-  return lines;
-}
-var srcLines = [];
-function jumpTo(line){
-  var v = $('srcview'), hl = $('hl');
-  v.scrollTop = Math.max(0, (line - 1) * 20 - 60);
-  hl.style.top = ((line - 1) * 20) + 'px';
-  hl.hidden = false;
-}
-var findFrom = 0;
-function findNext(){
-  var q = $('srcq').value;
-  var fm = $('findmsg');
-  if (!q){ fm.textContent = '請先輸入要找的文字。'; return; }
-  var ql = q.toLowerCase(), n = srcLines.length, hit = -1, count = 0;
-  for (var i = 0; i < n; i++){ if (srcLines[i].toLowerCase().indexOf(ql) >= 0) count++; }
-  for (var k = 0; k < n; k++){
-    var idx = (findFrom + k) % n;
-    if (srcLines[idx].toLowerCase().indexOf(ql) >= 0){ hit = idx; break; }
-  }
-  if (hit < 0){ fm.textContent = '找不到「' + q + '」。'; return; }
-  findFrom = hit + 1;
-  jumpTo(hit + 1);
-  fm.textContent = '共 ' + count + ' 處，目前在第 ' + (hit + 1) + ' 行。再按一次找下一個。';
-}
-$('srcfind').addEventListener('click', findNext);
-$('srcq').addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); findNext(); } });
-$('srcq').addEventListener('input', function(){ findFrom = 0; });
-$('srcopen').addEventListener('click', function(){
-  var mm = $('mapmsg');
-  mm.className = 'msg';
-  mm.textContent = '正在載入…';
-  loadSource().then(function(t){
-    srcLines = buildMap(t);
-    $('mapwrap').hidden = false;
-    mm.className = 'msg ok';
-    mm.textContent = '共 ' + srcLines.length + ' 行。點「第 N 行」跳到該處。';
-  }).catch(function(err){
-    mm.className = 'msg err';
-    mm.textContent = err && err.message === 'nofetch'
-      ? '這份檔案就是原始碼本身，請直接用編輯器開啟它；上面的「搜尋與地圖」在網站上（有網址的版本）才能使用。'
-      : '讀不到原始碼。請回到 Claude 對話，請它把完整的網頁檔提供給你。';
-  });
-});
-
 /* ---- tabs and routing (the address bar hash is #preset, #custom or #howto) ---- */
-var TABS = ['preset', 'custom', 'howto'];
+var TABS = ['preset', 'custom', 'howto'].filter(function(t){ return $('tab-' + t); });
 function setMode(m){
   mode = m;
   TABS.forEach(function(t){
@@ -2127,7 +1722,7 @@ function setMode(m){
   });
   var how = m === 'howto';
   $('app').hidden = how;
-  $('howtoPage').hidden = !how;
+  if ($('howtoPage')) $('howtoPage').hidden = !how;
   $('spec').hidden = how;
   if (how) return;
   $('s2preset').hidden = m !== 'preset';
@@ -2158,6 +1753,23 @@ TABS.forEach(function(t, i){
 });
 window.addEventListener('hashchange', route);
 
+/* ---- 製作者署名：被刪除或改掉時會自動補回 ---- */
+var CREDIT_TEXT = '製作者：Iris';
+function ensureCredit(){
+  var el = document.getElementById('credit');
+  if (el && el.isConnected && el.textContent === CREDIT_TEXT && el.className === 'credit' && !el.hidden && !el.getAttribute('style')) return;
+  if (el && el.parentNode) el.parentNode.removeChild(el);
+  var f = document.createElement('footer');
+  f.id = 'credit'; f.className = 'credit'; f.textContent = CREDIT_TEXT;
+  var w = document.querySelector('.wrap') || document.body;
+  var ref = document.getElementById('howtoPage');
+  if (ref && ref.parentNode === w) w.insertBefore(f, ref); else w.appendChild(f);
+}
+if (window.MutationObserver){
+  new MutationObserver(ensureCredit).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true });
+}
+setInterval(ensureCredit, 2000);
+
 /* ---- start ---- */
 buildPresetList();
 buildBaseSelect();
@@ -2178,5 +1790,5 @@ initStore().then(loadSaved).then(function(list){
 });
 })();
 </script>
-
-</body></html>
+</body>
+</html>
