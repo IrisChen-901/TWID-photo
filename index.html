@@ -298,7 +298,7 @@ input[type=number]:focus-visible,input[type=text]:focus-visible,select:focus-vis
 .sheetwrap .lab{display:block;font-size:13px;color:var(--ink-2);margin-bottom:6px}
 #sheet{display:block;width:100%;height:auto;aspect-ratio:3/2;background:#fff;border:1px solid var(--line-2);box-shadow:0 6px 16px -10px rgba(19,32,45,.5)}
 #sheet.port{width:min(100%,230px);aspect-ratio:2/3}
-.cap{margin:6px 0 8px;font:400 12px/1.5 var(--mono);color:var(--ink-2)}
+.cap{margin:6px 0 8px;font:400 12px/1.6 var(--mono);color:var(--ink-2);white-space:pre-line}
 
 .dlrow{display:grid;gap:8px;margin-top:6px}
 .btn.primary{
@@ -436,7 +436,7 @@ details.card > summary:focus-visible{outline:3px solid var(--accent);outline-off
           <ul class="rules">
             <li>在右側輸入照片的寬、高（cm），再加入水平或垂直輔助線，位置也用 cm 輸入。</li>
             <li>設定好的尺寸可以按「加入」存成常用尺寸，下次直接點一下就能載入。</li>
-            <li>排版會自動算出 4×6 吋紙上最多能放幾張。</li>
+            <li>照片在 4×6 吋紙上貼齊排列，會自動算出最多能放幾張，每張外圍都有裁切線；「留白」在步驟 4 設定。</li>
           </ul>
         </div>
       </div>
@@ -485,14 +485,6 @@ details.card > summary:focus-visible{outline:3px solid var(--accent);outline-off
           <div id="lines"></div>
           <p class="tip" style="margin-top:0">水平線量「距離上緣」、垂直線量「距離左緣」，單位 cm。</p>
           <div class="fld">
-            <span class="lab">4×6 排版</span>
-            <span class="times">間距</span>
-            <input type="number" id="cgap" min="0" max="2" step="0.05" inputmode="decimal" aria-label="照片間距（cm）" value="0.2">
-            <span class="times">留白</span>
-            <input type="number" id="cmar" min="0" max="2" step="0.05" inputmode="decimal" aria-label="紙邊最小留白（cm）" value="0.1">
-            <span class="times">cm</span>
-          </div>
-          <div class="fld">
             <label class="lab" for="sname">要在之後繼續使用嗎？取個名字加入常用尺寸</label>
             <input type="text" id="sname" maxlength="16" placeholder="例如：公司證件照" autocomplete="off">
             <button class="btn" type="button" id="saveBtn">加入</button>
@@ -529,7 +521,13 @@ details.card > summary:focus-visible{outline:3px solid var(--accent);outline-off
           <span class="lab">4 × 6 吋排版預覽</span>
           <canvas id="sheet" aria-label="4 乘 6 吋排版預覽"></canvas>
           <p class="cap" id="sheetcap">4 × 6 吋橫式 · 8 張</p>
-          <label class="chk"><input type="checkbox" id="cut" checked>加裁切線</label>
+          <label class="chk"><input type="checkbox" id="cut" checked>加裁切線（每張外圍都有線）</label>
+          <div class="fld" style="margin-top:12px">
+            <label class="lab" for="pad">留白：每張照片四周各多留一圈白框</label>
+            <input type="number" id="pad" min="0" max="2" step="0.05" inputmode="decimal" value="0" aria-label="留白（cm）">
+            <span class="times">cm　（0 ＝照片貼齊）</span>
+          </div>
+          <p class="tip" style="margin-top:0">照片彼此貼在一起、沒有間距。留白填 0，沿線裁下來每張剛好是成品尺寸；填 0.2，每張四周會多一圈 0.2 cm 的白框，裁下來比成品尺寸大一圈。紙放不下時會自動減少張數。</p>
         </div>
         <div class="grp">
           <span class="lab" id="reslab">解析度</span>
@@ -555,7 +553,7 @@ details.card > summary:focus-visible{outline:3px solid var(--accent);outline-off
           <img id="resimg" alt="裁切完成的照片">
           <p>這個環境無法直接下載。請在照片上按右鍵或長按，選擇「另存圖片」。排版檔請以 4×6 吋尺寸沖印。</p>
         </div>
-        <p class="tip" id="printtip">排版是 4 × 6 吋，存成 JPG 後可到相館、超商多媒體機或沖印機列印，紙張尺寸選 4×6，並關閉「自動縮放」。</p>
+        <p class="tip" id="printtip">排版是 4 × 6 吋，存成 JPG 後可到相館、超商多媒體機或沖印機列印，紙張尺寸選 4×6，並關閉「自動縮放」，用 100% 實際大小列印，裁下來才是正確尺寸。沿著線的中間裁。</p>
       </section>
     </aside>
   </main>
@@ -603,20 +601,21 @@ var SRC_JOE1 = { t: '1 吋規格整理（joelin.cc）', u: 'https://joelin.cc/p/
 var PRESETS = {
   id2: {
     key: 'id2', name: '2 吋大頭照', short: '2吋大頭照', w: 3.5, h: 4.5, top: 0.4, hmin: 3.2, hmid: 3.4, hmax: 3.6,
-    cols: 4, rows: 2, gap: 0.2, orient: 'land',
+    cols: 4, rows: 2, orient: 'land',
     uses: '身分證、護照、台胞證、外僑居留證、國家考試報名',
     spec2: '頭頂至下巴 3.2–3.6 cm',
     rules: [
       '頭頂至下巴 3.2–3.6 cm；護照臉部約佔照片高度 70–80%。',
       '白色背景，無陰影；脫帽、正面、五官清晰、自然表情。',
-      '不可修圖或合成。身分證用近 2 年內、護照用近 6 個月內的照片。'
+      '不可修圖或合成。身分證用近 2 年內、護照用近 6 個月內的照片。',
+      '台胞證另有規定：不可穿白色或淺色上衣，不可配戴耳環、項鍊等飾品（相館說明，請以受理單位為準）。'
     ],
     srcs: [SRC_JOE2]
   },
   half: {
-    key: 'half', name: '2 吋半身', short: '2吋半身', w: 4.2, h: 4.7, top: 0.5, hmin: 2.1, hmid: 2.35, hmax: 2.6,
-    cols: 3, rows: 2, gap: 0.2, orient: 'land',
-    uses: '履歷、學生證、國際駕照、部分落地簽',
+    key: 'half', name: '2 吋半身', short: '2吋半身', w: 3.5, h: 4.5, top: 0.5, hmin: 2.1, hmid: 2.35, hmax: 2.6,
+    cols: 4, rows: 2, orient: 'land',
+    uses: '履歷表、識別證、證書、學生證、國際駕照、部分落地簽',
     spec2: '頭部比例未規定，紅線為構圖參考',
     rules: [
       '來源沒有列出頭部比例，輔助線只是構圖參考（頭部約佔高度一半）。',
@@ -626,7 +625,7 @@ var PRESETS = {
   },
   health: {
     key: 'health', name: '健保卡', short: '健保卡', w: 3.5, h: 4.5, top: 0.4, hmin: 3.15, hmid: 3.375, hmax: 3.6,
-    cols: 4, rows: 2, gap: 0.2, orient: 'land',
+    cols: 4, rows: 2, orient: 'land',
     uses: '健保卡（申請或更換，可繳紙本或數位相片）',
     spec2: '2 吋大頭照，臉部約佔 70–80%',
     rules: [
@@ -639,12 +638,12 @@ var PRESETS = {
     srcs: [{ t: '健保署：健保卡相片規格範例', u: 'https://www.nhi.gov.tw/ch/cp-5014-bd5f2-2683-1.html' }]
   },
   id1: {
-    key: 'id1', name: '1 吋證件照', short: '1吋', w: 2.8, h: 3.5, top: 0.35, hmin: 2.28, hmid: 2.52, hmax: 2.8,
-    cols: 3, rows: 4, gap: 0.2, orient: 'port',
-    uses: '駕照、各類執照／證書、身心障礙證明、體健表、兵役體檢',
-    spec2: '頭部比例較寬鬆，紅線為構圖參考',
+    key: 'id1', name: '1 吋半身', short: '1吋半身', w: 2.8, h: 3.5, top: 0.4, hmin: 1.5, hmid: 1.75, hmax: 2.0,
+    cols: 3, rows: 4, orient: 'port',
+    uses: '體檢、駕照、各類執照／證書、手冊、身心障礙證明、體健表、兵役體檢',
+    spec2: '半身照，頭部比例未規定，紅線為構圖參考',
     rules: [
-      '1 吋沒有像 2 吋那樣明訂頭頂至下巴的公分數或 70–80% 比例，輔助線只是構圖參考，範圍比 2 吋寬鬆。',
+      '1 吋是「半身照」（可看到頭部與肩膀），不是大頭照。沒有明訂頭頂至下巴的公分數或比例，輔助線只是構圖參考（頭部約佔高度一半）。',
       '正面、脫帽、五官清晰、不遮住眉眼耳、表情自然、不露齒（部分單位參照一般規格）。',
       '不能直接把 2 吋照片裁成 1 吋，兩者比例不同，頭部比例會跑掉而可能被退件。',
       '光面素色背景，近 2 年內拍攝（依各單位規定）。'
@@ -652,18 +651,18 @@ var PRESETS = {
     srcs: [SRC_JOE1]
   },
   visa: {
-    key: 'visa', name: '美簽', short: '美簽', w: 5.08, h: 5.08, top: 0.6, hmin: 2.54, hmid: 3.0, hmax: 3.5,
+    key: 'visa', name: '美簽', short: '美簽', w: 5, h: 5, top: 0.6, hmin: 2.54, hmid: 3.0, hmax: 3.5,
     eye: [0.31, 0.44],
-    cols: 2, rows: 2, gap: 0, orient: 'land', digital: true,
+    cols: 2, rows: 2, orient: 'land', digital: true,
     uses: '美國簽證（紙本與 DS-160 電子檔）',
     spec2: '頭頂至下巴 25–35 mm（佔高度 50–69%）',
     rules: [
-      '紙本：2 × 2 英寸（51 × 51 mm）彩色照，頭頂至下巴 25–35 mm。',
+      '紙本：2 × 2 英寸的彩色照，相館以 5 × 5 cm 沖洗（本工具照 5 × 5 cm）；頭頂至下巴 25–35 mm。',
       '電子檔：正方形 600–1200 px，頭部佔高度 50–69%，眼睛距下緣 56–69%（標籤「眼」）。JPEG、24-bit sRGB、240 KB 以下，壓縮比不超過 20:1。',
       '輔助線的頭部範圍同時符合紙本與電子檔規定。',
-      '白色或近白背景，臉部與背景無明顯陰影；正面、睜眼、自然表情。',
-      '一般不可戴眼鏡、不可穿制服、不可修圖；6 個月內拍攝。',
-      '排版上下貼齊紙張邊緣，請用無邊框列印。'
+      '白色或近白背景，臉部與背景無明顯陰影；正面、睜眼、無表情（不要笑）。',
+      '一律不可戴眼鏡、不可穿制服、不可修圖；6 個月內拍攝。',
+      '排版上下貼齊紙張邊緣，請用無邊框列印（相館常見做法）。'
     ],
     srcs: [{ t: '美簽照片指南（百富美）', u: 'https://www.baifumei-studio.com/blog/us-visa-photo-guide/' }]
   }
@@ -675,7 +674,7 @@ var PRESETS = {
    sty：'solid' 實線、'dash' 虛線、'dot' 點線；label：標籤文字。 */
 var MAX_SAVED = 12;
 var CUSTOM_DEFAULT = {
-  w: 3.5, h: 4.5, gap: 0.2, margin: 0.1,
+  w: 3.5, h: 4.5, pad: 0,
   lines: [
     { axis: 'h', at: 0.4, sty: 'solid', label: '頭頂' },
     { axis: 'h', at: 3.8, sty: 'solid', label: '下巴' },
@@ -691,7 +690,8 @@ var P = PRESETS[presetKey];
 var C = null;                    // the custom size being edited
 var ASPECT = P.h / P.w;          // frame height in frame-width units
 var SW = 15.24, SH = 10.16;      // 4 x 6 inch sheet in cm (swapped for portrait)
-var L = { cols: 1, rows: 1, gap: 0, orient: 'land', n: 1 };
+var L = { cols: 1, rows: 1, orient: 'land', n: 1 };
+var presetPad = 0;
 
 var cv = $('cv'), ctx = cv.getContext('2d');
 var sheetCv = $('sheet'), sheetCtx = sheetCv.getContext('2d');
@@ -718,21 +718,32 @@ function cloneLines(a){
 }
 C = {
   custom: true, key: 'custom', name: '自訂', short: '自訂',
-  w: CUSTOM_DEFAULT.w, h: CUSTOM_DEFAULT.h, gap: CUSTOM_DEFAULT.gap, margin: CUSTOM_DEFAULT.margin,
+  w: CUSTOM_DEFAULT.w, h: CUSTOM_DEFAULT.h, pad: CUSTOM_DEFAULT.pad,
   lines: cloneLines(CUSTOM_DEFAULT.lines)
 };
 
-/* ---- 4x6 layout ---- */
-function bestLayout(p){
+/* ---- 4x6 layout: photos sit flush against each other, each with an optional white frame (pad) ---- */
+function curPad(){ return P.custom ? C.pad : presetPad; }
+function bestLayout(cw, ch){
   var best = null;
   ['land', 'port'].forEach(function(o){
     var sw = o === 'port' ? 10.16 : 15.24, sh = o === 'port' ? 15.24 : 10.16;
-    var cols = Math.max(0, Math.floor((sw - 2 * p.margin + p.gap + 1e-9) / (p.w + p.gap)));
-    var rows = Math.max(0, Math.floor((sh - 2 * p.margin + p.gap + 1e-9) / (p.h + p.gap)));
+    var cols = Math.max(0, Math.floor((sw + 1e-6) / cw));
+    var rows = Math.max(0, Math.floor((sh + 1e-6) / ch));
     var n = cols * rows;
-    if (!best || n > best.n) best = { cols: cols, rows: rows, gap: p.gap, orient: o, n: n };
+    if (!best || n > best.n) best = { cols: cols, rows: rows, orient: o, n: n };
   });
   return best;
+}
+function computeLayout(pad){
+  var cw = P.w + 2 * pad, ch = P.h + 2 * pad;
+  if (!P.custom && P.cols){
+    var sw = P.orient === 'port' ? 10.16 : 15.24, sh = P.orient === 'port' ? 15.24 : 10.16;
+    if (P.cols * cw <= sw + 1e-6 && P.rows * ch <= sh + 1e-6){
+      return { cols: P.cols, rows: P.rows, orient: P.orient, n: P.cols * P.rows };
+    }
+  }
+  return bestLayout(cw, ch);
 }
 
 /* ---- ruler + guides (rebuilt for each preset or custom edit) ---- */
@@ -820,9 +831,13 @@ function updateTexts(){
   }
   $('px300').textContent = px(P.w, 300) + ' × ' + px(P.h, 300) + ' px';
   $('px600').textContent = px(P.w, 600) + ' × ' + px(P.h, 600) + ' px';
+  var pd = curPad();
   $('sheetcap').textContent = L.n === 0
     ? '尺寸超過 4 × 6 吋，無法排版'
-    : '4 × 6 吋' + (L.orient === 'port' ? '直式' : '橫式') + ' · ' + L.n + ' 張 · ' + (L.gap > 0 ? '間距 ' + L.gap + ' cm' : '無間距');
+    : '4 × 6 吋' + (L.orient === 'port' ? '直式' : '橫式') + ' · ' + L.n + ' 張（' + L.cols + ' × ' + L.rows + '），貼齊無間距\n' +
+      (pd > 0
+        ? '沿線裁下：每張 ' + fcm(P.w + 2 * pd) + ' × ' + fcm(P.h + 2 * pd) + ' cm（照片 ' + fcm(P.w) + ' × ' + fcm(P.h) + ' ＋ 四周留白 ' + fcm(pd) + '）'
+        : '沿線裁下：每張剛好 ' + fcm(P.w) + ' × ' + fcm(P.h) + ' cm');
   $('dlds').hidden = !(P.digital && !custom);
 }
 
@@ -884,56 +899,43 @@ function paint(c, outW, outH){
   c.restore();
 }
 
-/* ---- 4 x 6 sheet ---- */
-function drawSheet(c, pxW, pxH, tile, cut){
-  var ppc = pxW / SW;                            // pixels per cm
+/* ---- 4 x 6 sheet: whole-pixel cells, so photos touch with no gaps and cut lines sit exactly on cell edges ---- */
+function drawSheet(c, pxW, pxH, cut){
   c.setTransform(1, 0, 0, 1, 0, 0);
   c.fillStyle = '#ffffff';
   c.fillRect(0, 0, pxW, pxH);
   if (!L.n) return;
-  var gw = L.cols * P.w + (L.cols - 1) * L.gap;
-  var gh = L.rows * P.h + (L.rows - 1) * L.gap;
-  var x0 = (SW - gw) / 2, y0 = (SH - gh) / 2;
+  var pad = curPad(), ppc = pxW / SW;
+  var padPx = Math.round(pad * ppc);
+  var cwp = Math.min(Math.round((P.w + 2 * pad) * ppc), Math.floor(pxW / L.cols));
+  var chp = Math.min(Math.round((P.h + 2 * pad) * ppc), Math.floor(pxH / L.rows));
+  var tw = Math.max(1, cwp - 2 * padPx), th = Math.max(1, chp - 2 * padPx);
+  tileCv.width = tw; tileCv.height = th;
+  paint(tileCv.getContext('2d'), tw, th);
+  var gw = L.cols * cwp, gh = L.rows * chp;
+  var x0 = Math.round((pxW - gw) / 2), y0 = Math.round((pxH - gh) / 2);
   var r, k;
   for (r = 0; r < L.rows; r++){
     for (k = 0; k < L.cols; k++){
-      c.drawImage(tile,
-        Math.round((x0 + k * (P.w + L.gap)) * ppc),
-        Math.round((y0 + r * (P.h + L.gap)) * ppc));
+      c.drawImage(tileCv, x0 + k * cwp + padPx, y0 + r * chp + padPx);
     }
   }
   if (!cut) return;
-  c.strokeStyle = '#8f9aa5';
-  c.lineWidth = Math.max(1, Math.round(ppc * 0.017));
-  var ext = 0.25 * ppc, near = 0.04 * ppc;
-  var half = c.lineWidth % 2 ? 0.5 : 0;
-  c.beginPath();
-  function seg(x1, y1, x2, y2){
-    c.moveTo(Math.round(x1) + half, Math.round(y1) + half);
-    c.lineTo(Math.round(x2) + half, Math.round(y2) + half);
+  var lw = Math.max(1, Math.round(ppc * 0.015)), hw = Math.floor(lw / 2);
+  var extX = Math.max(0, Math.min(Math.round(0.3 * ppc), x0 - 2));
+  var extY = Math.max(0, Math.min(Math.round(0.3 * ppc), y0 - 2));
+  c.fillStyle = '#4a525a';
+  for (k = 0; k <= L.cols; k++){
+    var x = Math.min(Math.max(x0 + k * cwp - hw, 0), pxW - lw);
+    c.fillRect(x, y0 - extY, lw, gh + 2 * extY);
   }
-  var xa = x0 * ppc, xb = (x0 + gw) * ppc, ya = y0 * ppc, yb = (y0 + gh) * ppc;
-  for (k = 1; k < L.cols; k++){
-    var xs = (x0 + k * (P.w + L.gap) - L.gap / 2) * ppc;
-    seg(xs, ya - ext, xs, yb + ext);
+  for (r = 0; r <= L.rows; r++){
+    var y = Math.min(Math.max(y0 + r * chp - hw, 0), pxH - lw);
+    c.fillRect(x0 - extX, y, gw + 2 * extX, lw);
   }
-  for (r = 1; r < L.rows; r++){
-    var ys = (y0 + r * (P.h + L.gap) - L.gap / 2) * ppc;
-    seg(xa - ext, ys, xb + ext, ys);
-  }
-  seg(xa, ya - ext, xa, ya - near); seg(xa, yb + near, xa, yb + ext);
-  seg(xb, ya - ext, xb, ya - near); seg(xb, yb + near, xb, yb + ext);
-  seg(xa - ext, ya, xa - near, ya); seg(xb + near, ya, xb + ext, ya);
-  seg(xa - ext, yb, xa - near, yb); seg(xb + near, yb, xb + ext, yb);
-  c.stroke();
 }
 function renderSheet(){
-  var pxW = sheetCv.width, pxH = sheetCv.height;
-  var ppc = pxW / SW;
-  var tw = Math.max(1, Math.round(P.w * ppc)), th = Math.max(1, Math.round(P.h * ppc));
-  tileCv.width = tw; tileCv.height = th;
-  paint(tileCv.getContext('2d'), tw, th);
-  drawSheet(sheetCtx, pxW, pxH, tileCv, $('cut').checked);
+  drawSheet(sheetCtx, sheetCv.width, sheetCv.height, $('cut').checked);
 }
 
 var raf = 0;
@@ -1142,7 +1144,7 @@ function hideResult(){
 }
 function applyP(resetV){
   ASPECT = P.h / P.w;
-  L = P.custom ? bestLayout(P) : { cols: P.cols, rows: P.rows, gap: P.gap, orient: P.orient, n: P.cols * P.rows };
+  L = computeLayout(curPad());
   var port = L.orient === 'port';
   SW = port ? 10.16 : 15.24;
   SH = port ? 15.24 : 10.16;
@@ -1210,7 +1212,7 @@ function buildBaseSelect(){
       lines.push({ axis: 'h', at: r2(p.eye[0] * p.h), sty: 'dot', label: '眼 69%' });
       lines.push({ axis: 'h', at: r2(p.eye[1] * p.h), sty: 'dot', label: '眼 56%' });
     }
-    setCustomFrom({ w: p.w, h: p.h, gap: p.gap, margin: 0.1, lines: lines.slice(0, MAX_LINES) });
+    setCustomFrom({ w: p.w, h: p.h, pad: 0, lines: lines.slice(0, MAX_LINES) });
     saveMsg('已帶入「' + p.name + '」的尺寸與輔助線，可以再自己調整。');
   });
 }
@@ -1224,18 +1226,15 @@ function saveMsg(msg, kind){
 function syncCustomInputs(){
   $('cw').value = C.w;
   $('ch').value = C.h;
-  $('cgap').value = C.gap;
-  $('cmar').value = C.margin;
 }
 function setCustomFrom(o){
   C.w = num(o.w, 0.5, 30, 3.5);
   C.h = num(o.h, 0.5, 30, 4.5);
-  C.gap = num(o.gap, 0, 2, 0.2);
-  C.margin = num(o.margin, 0, 2, 0.1);
+  C.pad = num(o.pad, 0, 2, 0);
   C.lines = cloneLines(o.lines || []);
   syncCustomInputs();
   renderLines();
-  if (mode === 'custom') applyP(true);
+  if (mode === 'custom'){ $('pad').value = C.pad; applyP(true); }
 }
 function renderLines(){
   var box = $('lines');
@@ -1305,14 +1304,13 @@ function onSize(){
 }
 $('cw').addEventListener('input', onSize);
 $('ch').addEventListener('input', onSize);
-function onGap(){
-  var g = readNum($('cgap'), 0, 2), m = readNum($('cmar'), 0, 2);
-  if (g == null || m == null) return;
-  C.gap = g; C.margin = m;
-  if (mode === 'custom') applyP(false);
+function onPad(){
+  var v = readNum($('pad'), 0, 2);
+  if (v == null) return;
+  if (P.custom) C.pad = v; else presetPad = v;
+  applyP(false);
 }
-$('cgap').addEventListener('input', onGap);
-$('cmar').addEventListener('input', onGap);
+$('pad').addEventListener('input', onPad);
 
 /* ---- saved sizes: private to the signed-in viewer when possible, otherwise this browser ---- */
 var LS_KEY = 'idphoto.sizes.v1';
@@ -1333,7 +1331,7 @@ function cleanItem(x){
     id: String(x.id || Math.random().toString(36).slice(2)).slice(0, 40),
     name: name,
     w: num(x.w, 0.5, 30, 3.5), h: num(x.h, 0.5, 30, 4.5),
-    gap: num(x.gap, 0, 2, 0.2), margin: num(x.margin, 0, 2, 0.1),
+    pad: num(x.pad, 0, 2, 0),
     lines: []
   };
   (Array.isArray(x.lines) ? x.lines : []).slice(0, MAX_LINES).forEach(function(l){
@@ -1431,7 +1429,7 @@ function renderSaved(){
 $('saveBtn').addEventListener('click', function(){
   var name = $('sname').value.replace(/^\s+|\s+$/g, '').slice(0, 16);
   if (!name){ saveMsg('請先輸入名稱。', 'err'); return; }
-  var it = cleanItem({ name: name, w: C.w, h: C.h, gap: C.gap, margin: C.margin, lines: C.lines });
+  var it = cleanItem({ name: name, w: C.w, h: C.h, pad: C.pad, lines: C.lines });
   var idx = -1;
   saved.forEach(function(s, i){ if (s.name === name) idx = i; });
   if (idx >= 0){ it.id = saved[idx].id; saved[idx] = it; }
@@ -1610,11 +1608,7 @@ function makeJob(kind, dpi){
   var name;
   if (kind === 'sheet'){
     c.width = Math.round(SW / 2.54 * dpi); c.height = Math.round(SH / 2.54 * dpi);
-    var ppc = c.width / SW;
-    var tile = document.createElement('canvas');
-    tile.width = Math.round(P.w * ppc); tile.height = Math.round(P.h * ppc);
-    paint(tile.getContext('2d'), tile.width, tile.height);
-    drawSheet(c.getContext('2d'), c.width, c.height, tile, $('cut').checked);
+    drawSheet(c.getContext('2d'), c.width, c.height, $('cut').checked);
     name = '證件照_' + P.short + '_4x6排版_' + dpi + 'dpi';
   } else {
     c.width = px(P.w, dpi); c.height = px(P.h, dpi);
@@ -1731,6 +1725,7 @@ function setMode(m){
   $('infoCustom').hidden = m !== 'custom';
   $('s2title').textContent = m === 'custom' ? '設定尺寸與輔助線' : '選擇規格';
   P = m === 'custom' ? C : PRESETS[presetKey];
+  $('pad').value = curPad();
   applyP(true);
 }
 function route(){
